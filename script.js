@@ -27,24 +27,55 @@ bankData = {
     img: '💷'
   }
 }
-const keys = {};
+
+const KEYS = {};
+const BANKKEYS = {};
 const getMoney = (userData, bankData) => {
   return new Promise((resolve, reject) => {
     confirm('Посмотреть баланс на карте?') ? resolve(userData) : reject({userData: userData, bankData: bankData})
   })
-}
+};
 
 for(let key in userData) {
-  keys[key] = key; 
+  KEYS[key] = key; 
+};
+
+for (let key in bankData) {
+  BANKKEYS[key] = key;
 }
 
 getMoney(userData, bankData)
 .then(
   function(userData){
-    let userChoice;
+    let userChoiceBalance;
     do {
-      userChoice = prompt(`введите допустимую валюту, в формате: USD, EUR, UAH, BIF, AOA`);
-    }while(userChoice !== keys[userChoice]);
-    console.log(`Баланс составляет: ${userData[userChoice]} ${keys[userChoice]}`);
+      userChoiceBalance = prompt(`Введите допустимую валюту, в формате: USD, EUR, UAH, BIF, AOA`).toUpperCase();
+    }while(userChoiceBalance !== KEYS[userChoiceBalance]);
+    console.log(userChoiceBalance)
+    console.log(`Баланс составляет: ${userData[userChoiceBalance]} ${KEYS[userChoiceBalance]}`);
+    console.log(`Спасибо, хорошего дня🤗!)))`)
+  },
+  
+  function(reject) {
+    let userChoiceCash;
+    let userChoiseNnumber;
+    do {
+      userChoiceCash = prompt(`Введите допустимую валюту, в формате: USD, EUR, UAH, BIF, AOA`).toUpperCase();
+    } while(userChoiceCash !== KEYS[userChoiceCash] || userChoiceCash !== BANKKEYS[userChoiceCash]);
+     
+    userChoiseNnumber = prompt(`Введите сумму которую желаете снять:`);
+
+    if (userChoiseNnumber > reject.bankData[userChoiceCash].max) {
+      console.log(`Введенная сумма больше допустимой.`)
+      console.log(`Максимальная сумма снятия:${reject.bankData[userChoiceCash].max}${reject.bankData[userChoiceCash].img}`)
+      console.log(`Спасибо, хорошего дня🤗!)))`)
+    } else if(userChoiseNnumber < reject.bankData[userChoiceCash].min) {
+      console.log(`Введенная сумма меньше допустимой.`)
+      console.log(`Минимальная сумма снятия:${reject.bankData[userChoiceCash].min}${reject.bankData[userChoiceCash].img}`)
+      console.log(`Спасибо, хорошего дня🤗!)))`)
+    } else {
+      console.log(`Вот Ваши денежки ${userChoiseNnumber}${userChoiceCash}${reject.bankData[userChoiceCash].img}`)
+      console.log(`Спасибо, хорошего дня🤗!)))`)
+    }
   }
 )

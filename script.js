@@ -27,7 +27,24 @@ bankData = {
     img: '💷'
   }
 }
-
-function getMoney(userData, bankData) {
-  return new Promise((resolve, reject))
+const keys = {};
+const getMoney = (userData, bankData) => {
+  return new Promise((resolve, reject) => {
+    confirm('Посмотреть баланс на карте?') ? resolve(userData) : reject({userData: userData, bankData: bankData})
+  })
 }
+
+for(let key in userData) {
+  keys[key] = key; 
+}
+
+getMoney(userData, bankData)
+.then(
+  function(userData){
+    let userChoice;
+    do {
+      userChoice = prompt(`введите допустимую валюту, в формате: USD, EUR, UAH, BIF, AOA`);
+    }while(userChoice !== keys[userChoice]);
+    console.log(`Баланс составляет: ${userData[userChoice]} ${keys[userChoice]}`);
+  }
+)

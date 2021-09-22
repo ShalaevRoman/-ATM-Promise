@@ -51,7 +51,7 @@ getMoney(userData, bankData)
     do {
       userChoiceBalance = prompt(`Введите допустимую валюту, в формате: USD, EUR, UAH, BIF, AOA`);
       if (userChoiceBalance) {
-        userChoiceBalance.toUpperCase();
+        userChoiceBalance = userChoiceBalance.toUpperCase();
       }
     }while(userChoiceBalance !== KEYS[userChoiceBalance]);
     console.log(userChoiceBalance)
@@ -65,7 +65,7 @@ getMoney(userData, bankData)
     do {
       userChoiceCash = prompt(`Введите допустимую валюту, в формате: USD, EUR, UAH, BIF, AOA`);
       if (userChoiceCash) {
-        userChoiceCash.toUpperCase();
+        userChoiceCash = userChoiceCash.toUpperCase();
       }
     } while(userChoiceCash !== KEYS[userChoiceCash] || userChoiceCash !== BANKKEYS[userChoiceCash]);
      
